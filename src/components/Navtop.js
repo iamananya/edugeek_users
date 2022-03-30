@@ -9,14 +9,14 @@ function Navtop() {
     <div>
       <Navbar bg="light" expand="lg">
         <Container>
-          <Navbar.Brand href="/">Edu-Geek</Navbar.Brand>
+          <Navbar.Brand href="/login">Edu-Geek</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link href="/batches">Batches</Nav.Link>
-              <Nav.Link href="/enquiry">Enquiry</Nav.Link>
+              <Nav.Link href="/coupons">Coupons</Nav.Link>
               <Nav.Link href="/timetable">Timetable</Nav.Link>
-              <Nav.Link href="/chat">Chat</Nav.Link>
+              
               {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Timetable</NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">

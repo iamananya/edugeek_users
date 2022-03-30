@@ -2,21 +2,32 @@
 import './App.css';
 import Adminpage from './components/Adminpage';
 import Navtop from './components/Navtop';
+import Login from "./components/Login"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Timetable from './components/Timetable';
-import Chat from './components/Chat';
 import Batch from './components/Batch';
+import React, { useState } from 'react';
+import SignUp from './components/SignUp';
+import Coupons from './components/Coupons';
 function App() {
+  // const [token, setToken] = useState();
+  // if(!token) {
+  //   return <Login setToken={setToken} />
+  // }
   return (
+    
     <div className="App">
       <Navtop/>
       {/* <Adminpage/> */}
       <BrowserRouter>
       <Routes>
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/signup" element={<SignUp/>}/>
           <Route path="/batches" element={<Adminpage/>} />
+          <Route path="/coupons" element={<Coupons/>} />
           <Route path="/timetable" element={<Timetable/>} />
-          <Route path="/chat" element={<Chat/>} />
+  
           <Route path="/batch" element={<Batch/>} />
 
             
