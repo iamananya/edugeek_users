@@ -8,11 +8,24 @@ import { ModalFooter } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 
 import { useState } from "react";
+
+var batch_start="";
+var batch_code;
+var course="";
+var category="";
+var subject="";
+var timing="";
+
+
 function ModalPage() {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+
+
+
 
   return (
     <div>
@@ -31,21 +44,45 @@ function ModalPage() {
               controlId="exampleForm.ControlTextarea1"
             >
               <Form.Label>Batch Name</Form.Label>
-              <Form.Control type="text" placeholder="Name" />
+              <Form.Control type="text" placeholder="Name" onChange={(e) => {
+                      course = e.target.value;
+                    }}/>
             </Form.Group>
             <Form.Group
               className="mb-3"
               controlId="exampleForm.ControlTextarea1"
             >
               <Form.Label>Batch Code</Form.Label>
-              <Form.Control type="text" placeholder="eg. Phy123" />
+              <Form.Control type="text" placeholder="eg. Phy123" onChange={(e) => {
+                      batch_code = e.target.value;
+                    }}/>
             </Form.Group>
             <Form.Group
               className="mb-3"
               controlId="exampleForm.ControlTextarea1"
             >
               <Form.Label>Batch Start Date</Form.Label>
-            <Form.Control type="text" placeholder="12-01-2020" />
+            <Form.Control type="text" placeholder="12-01-2020" onChange={(e) => {
+                      batch_start = e.target.value;
+                    }} />
+            </Form.Group>
+            <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlTextarea1"
+            >
+              <Form.Label>Category</Form.Label>
+            <Form.Control type="text" placeholder="category"  onChange={(e) => {
+                      category = e.target.value;
+                    }} />
+            </Form.Group>
+            <Form.Group
+              className="mb-3"
+              controlId="exampleForm.ControlTextarea1"
+            >
+              <Form.Label>Timing</Form.Label>
+            <Form.Control type="datetime" placeholder="14:14:02" onChange={(e) => {
+                      timing = e.target.value;
+                    }}/>
             </Form.Group>
 
             
