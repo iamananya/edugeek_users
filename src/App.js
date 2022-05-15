@@ -16,25 +16,25 @@ import Students from './components/Students';
 function App() {
   // const [token, setToken] = useState();
   // if(!token) {
-  //   return <Login setToken={setToken} />
+  //   return <Login setToken={setToken : <Login/>} />
   // }
   return (
     
     <div className="App" style={{backgroundColor:"#daebe1"}}>
+      <BrowserRouter>
       <Navtop/>
       {/* <Adminpage/> */}
-      <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login/>}/>
         <Route path="/" element={<SignUp/>}/>
-          <Route path="/batches" element={<Adminpage/>} />
-          <Route path="/coupons" element={<Coupons/>} />
-          <Route path="/timetable" element={<Timetable/>} />
+          <Route path="/batches" element={localStorage.getItem("edugeek-authorized") === "1" ? <Adminpage/> : <Login/>} />
+          <Route path="/coupons" element={localStorage.getItem("edugeek-authorized") === "1" ? <Coupons/> : <Login/>} />
+          <Route path="/timetable" element={localStorage.getItem("edugeek-authorized") === "1" ? <Timetable/> : <Login/>} />
   
-          <Route path="/batch" element={<Batch/>} />
-          <Route path="/material" element={<StudyMaterial/>} />
-          <Route path="/notif" element={<Notif/>}/>
-          <Route path="/profiles" element={<Students/>}/>
+          <Route path="/batch" element={localStorage.getItem("edugeek-authorized") === "1" ? <Batch/> : <Login/>} />
+          <Route path="/material" element={localStorage.getItem("edugeek-authorized") === "1" ? <StudyMaterial/> : <Login/>} />
+          <Route path="/notif" element={localStorage.getItem("edugeek-authorized") === "1" ? <Notif/> : <Login/>}/>
+          <Route path="/profiles" element={localStorage.getItem("edugeek-authorized") === "1" ? <Students/> : <Login/>}/>
 
             
           </Routes>

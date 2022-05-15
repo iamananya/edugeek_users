@@ -46,7 +46,8 @@ function SignUp() {
     "address":address,
     "image":null,
     "subscription_start_date":"2022-04-03",
-    "subscription_end_date":"2022-04-03"
+    "subscription_end_date":"2022-04-03",
+    "password": password
   })
   console.log(response);
   }

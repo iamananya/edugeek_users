@@ -1,7 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import { getStudents } from "../apiClient/apiClient";
+import { useNavigate } from "react-router-dom";
+
+var phone = "";
+var password = "";
 
 const Login = () => {
+
+  const [profile, setProfile] = useState([]);
+
+  const navigate = useNavigate();
+
+  useEffect(async () => {
+    const res = await getStudents();
+    setProfile(res.data);
+  }, [])
+
+  const handleLogin = (event) => {
+    event.preventDefault();
+    profile.forEach((adm, index) => {
+      console.log(adm.phone)
+      console.log(adm.password)
+      if(adm.phone === phone && adm.password === password) {
+        localStorage.setItem('edugeek-authorized', 1);
+        navigate('/batches', {replace: true});
+        window.location.reload();
+        return;
+      }
+    })
+    console.log('Login Unsuccessful')
+  }
   return (
     <>
       <Container>
@@ -15,15 +44,19 @@ const Login = () => {
             sm={12}
             className="p-5 m-auto shadow-sm rounded-lg"
           >
-            <Form>
+            <Form onSubmit={handleLogin}>
               <Form.Group>
                 <Form.Label>Phone</Form.Label>
-                <Form.Control placeholder="Phone Number" />
+                <Form.Control placeholder="Phone Number" onChange={(e) => {
+                      phone = e.target.value;
+                    }} />
               </Form.Group>
               <br />
               <Form.Group controlId="formBasicPassword">
                 <Form.Label>Password</Form.Label>
-                <Form.Control type="password" placeholder="Password" />
+                <Form.Control type="password" placeholder="Password" onChange={(e) => {
+                      password = e.target.value;
+                    }} />
               </Form.Group>
               <br />
               <Button variant="success btn-block" type="submit">
