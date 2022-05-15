@@ -6,26 +6,32 @@ import ModalHeader from "react-bootstrap/esm/ModalHeader";
 import ModalTitle from "react-bootstrap/ModalTitle";
 import { ModalFooter } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
+import { createBatch} from "../apiClient/apiClient";
 
 import { useState } from "react";
 
 var batch_start="";
 var batch_code;
 var course="";
-var category="";
-var subject="";
-var timing="";
 
 
-function ModalPage() {
+function ModalPage(batches, setBatches) {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-
-
-
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const res = await createBatch(batch_start, batch_code, course);
+      batches.setBatches([...batches.batches, {
+      'batch_start' : batch_start, 
+      'batch_code' : batch_code,
+      'course' : course
+    }])
+    handleClose();
+    console.log(res);
+  }
 
   return (
     <div>
@@ -38,7 +44,7 @@ function ModalPage() {
           <Modal.Title>Enter Batch details</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+          <Form onSubmit={handleSubmit}>
             <Form.Group
               className="mb-3"
               controlId="exampleForm.ControlTextarea1"
@@ -66,24 +72,6 @@ function ModalPage() {
                       batch_start = e.target.value;
                     }} />
             </Form.Group>
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
-              <Form.Label>Category</Form.Label>
-            <Form.Control type="text" placeholder="category"  onChange={(e) => {
-                      category = e.target.value;
-                    }} />
-            </Form.Group>
-            <Form.Group
-              className="mb-3"
-              controlId="exampleForm.ControlTextarea1"
-            >
-              <Form.Label>Timing</Form.Label>
-            <Form.Control type="datetime" placeholder="14:14:02" onChange={(e) => {
-                      timing = e.target.value;
-                    }}/>
-            </Form.Group>
 
             
             <Button variant="primary" type="submit">
@@ -91,14 +79,6 @@ function ModalPage() {
             </Button>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
       </Modal>
     </div>
   );
