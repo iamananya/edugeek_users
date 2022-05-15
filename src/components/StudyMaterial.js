@@ -6,20 +6,19 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Sidenav from "./Sidenav";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { getVideos } from "../apiClient/apiClient";
+import { getMaterial } from "../apiClient/apiClient";
 
 
 import ReactPlayer from "react-player";
 import Notif from "./Notif";
-function Batch() {
-  const [videos, setVideos] = useState([]);
-  const [playing, setPlaying] = useState(true);
-
+function StudyMaterial() {
+  const [material, setMaterial] = useState([]);
+  
   useEffect(async () => {
-    const res = await getVideos();
-    setVideos(res.data);
+    const res = await getMaterial();
+    setMaterial(res.data);
     console.log(res.data);
-    console.log(videos);
+    console.log(material);
   }, []);
   return (
     <div style={{marginTop:"5%"}}>
@@ -29,27 +28,19 @@ function Batch() {
             <Sidenav />
           </Col>
           <Col xs={6}>
-            <h2>Class 10 Science</h2>
+            <h2>List of Study Material</h2>
             <div style={{ marginTop: "5%" }}>
               <div onContextMenu={(e) => e.preventDefault()}>
                 <Col style={{ padding: "20px" }}>
-                  {videos.map((video) => (
+                  {material.map((data) => (
                     <Card>
-                      <Card.Header as="h5">Class: {video.class_number}</Card.Header>
+                      <Card.Header as="h5">Class: {data.class_number}</Card.Header>
+                      <Card.Img variant="top" src="https://images.unsplash.com/photo-1648737155328-0c0012cf2f20" />
                       <Card.Body>
-                        <ReactPlayer
-                          config={{ file: { attributes: { controlsList: 'nodownload' } } }}
-
-                          url={video.video}
-                          playing={playing}
-                          controls
-                          width="100%"
-                          
-                        
-                        /> 
+                       
                       
-                      <Card.Title>Title: {video.title}</Card.Title>
-
+                      <Card.Title>Title: {data.title}</Card.Title>
+                      <Button href={data.material}>Link</Button> 
                         
                       </Card.Body>
                     </Card>
@@ -66,4 +57,4 @@ function Batch() {
   );
 }
 
-export default Batch;
+export default StudyMaterial;

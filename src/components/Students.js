@@ -6,20 +6,19 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Sidenav from "./Sidenav";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { getVideos } from "../apiClient/apiClient";
+import { getStudents } from "../apiClient/apiClient";
 
 
 import ReactPlayer from "react-player";
 import Notif from "./Notif";
-function Batch() {
-  const [videos, setVideos] = useState([]);
-  const [playing, setPlaying] = useState(true);
-
+function Students() {
+  const [student, setStudent] = useState([]);
+  
   useEffect(async () => {
-    const res = await getVideos();
-    setVideos(res.data);
+    const res = await getStudents();
+    setStudent(res.data);
     console.log(res.data);
-    console.log(videos);
+    console.log(student);
   }, []);
   return (
     <div style={{marginTop:"5%"}}>
@@ -29,29 +28,20 @@ function Batch() {
             <Sidenav />
           </Col>
           <Col xs={6}>
-            <h2>Class 10 Science</h2>
+            <h2>List of Students</h2>
             <div style={{ marginTop: "5%" }}>
               <div onContextMenu={(e) => e.preventDefault()}>
                 <Col style={{ padding: "20px" }}>
-                  {videos.map((video) => (
-                    <Card>
-                      <Card.Header as="h5">Class: {video.class_number}</Card.Header>
-                      <Card.Body>
-                        <ReactPlayer
-                          config={{ file: { attributes: { controlsList: 'nodownload' } } }}
-
-                          url={video.video}
-                          playing={playing}
-                          controls
-                          width="100%"
-                          
-                        
-                        /> 
-                      
-                      <Card.Title>Title: {video.title}</Card.Title>
+                  {student.map((data) => (
+                    <Card >
+                      <Card.Header>{data.name}</Card.Header>
+                      {/* <Card.Img variant="top" style={{width:"100px",height:"100px",borderRadius:"50%"}} src={data.image}></Card.Img> */}
 
                         
-                      </Card.Body>
+                      <Card.Text style={{padding:"10px"}}>Phone:{data.phone} <br/> Email :{data.email}
+                      <br></br>
+
+                      </Card.Text>
                     </Card>
                   ))}
                 </Col>
@@ -66,4 +56,4 @@ function Batch() {
   );
 }
 
-export default Batch;
+export default Students;

@@ -10,6 +10,9 @@ import Batch from './components/Batch';
 import React, { useState } from 'react';
 import SignUp from './components/SignUp';
 import Coupons from './components/Coupons';
+import StudyMaterial from './components/StudyMaterial';
+import Notif from './components/Notif';
+import Students from './components/Students';
 function App() {
   // const [token, setToken] = useState();
   // if(!token) {
@@ -17,7 +20,7 @@ function App() {
   // }
   return (
     
-    <div className="App">
+    <div className="App" style={{backgroundColor:"#daebe1"}}>
       <Navtop/>
       {/* <Adminpage/> */}
       <BrowserRouter>
@@ -29,6 +32,9 @@ function App() {
           <Route path="/timetable" element={<Timetable/>} />
   
           <Route path="/batch" element={<Batch/>} />
+          <Route path="/material" element={<StudyMaterial/>} />
+          <Route path="/notif" element={<Notif/>}/>
+          <Route path="/profiles" element={<Students/>}/>
 
             
           </Routes>

@@ -15,7 +15,7 @@ function Navtop() {
             <Nav className="me-auto">
               <Nav.Link href="/batches">Batches</Nav.Link>
               <Nav.Link href="/coupons">Coupons</Nav.Link>
-              <Nav.Link href="/timetable">Timetable</Nav.Link>
+              {/* <Nav.Link href="/timetable">Timetable</Nav.Link> */}
               
               {/* <NavDropdown title="Dropdown" id="basic-nav-dropdown">
                 <NavDropdown.Item href="#action/3.1">Timetable</NavDropdown.Item>
