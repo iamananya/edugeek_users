@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = 'http://localhost:8000';
+const baseUrl = 'http://edugeek.pythonanywhere.com';
 
 export const getBatches = async () => {
     const res = await axios.get(baseUrl + '/batches/')
