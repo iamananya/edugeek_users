@@ -2,6 +2,8 @@ import React from "react";
 import { Button, Col, Container, Form, Row } from "react-bootstrap";
 import axios from "axios";
 import { useState } from "react";
+import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
+import { authentication } from './FirebaseConfig';
 
 var phone_number;
 var entered_otp = "";
@@ -20,19 +22,39 @@ function SignUp() {
 
   async function sendOTP(e) {
     e.preventDefault();
-    otp_number = Math.floor(Math.random() * 9000 + 1000);
-    console.log(otp_number);
-    var response = await axios.get(`https://www.fast2sms.com/dev/bulkV2?authorization=qmPxwWps841RM9YD0STZlavkub2KOzX5CEgdU3oBnAQHt6firj8BRnX0FuOeZhrYkNCaq3c9EzvxTKjS&variables_values=${otp_number}&route=otp&numbers=${phone_number}`)
-    console.log(response);
-    set_otp_sent(true);
+    // otp_number = Math.floor(Math.random() * 9000 + 1000);
+    // console.log(otp_number);
+    // var response = await axios.get(`https://www.fast2sms.com/dev/bulkV2?authorization=qmPxwWps841RM9YD0STZlavkub2KOzX5CEgdU3oBnAQHt6firj8BRnX0FuOeZhrYkNCaq3c9EzvxTKjS&variables_values=${otp_number}&route=otp&numbers=${phone_number}`)
+    // console.log(response);
+    if (phone_number === "" || phone_number.length < 10) return;
+    window.recaptchaVerifier = new RecaptchaVerifier('recaptcha-container', {
+      'size': 'invisible',
+      'callback': (response) => {
+      }
+    }, authentication);
+    signInWithPhoneNumber(authentication, phone_number, window.recaptchaVerifier).then(confirmationResult => {
+      window.confirmationResult = confirmationResult;
+      set_otp_sent(true);
+    }).catch((error) => {
+      console.log(error);
+    })
   }
 
   async function validateOTP(e) {
     e.preventDefault();
-    console.log(entered_otp, otp_number, otp_matched);
-    if (parseInt(entered_otp) === otp_number) {
+    // console.log(entered_otp, otp_number, otp_matched);
+    // if (parseInt(entered_otp) === otp_number) {
+    //   set_otp_matched(true);
+    // }
+
+    window.confirmationResult.confirm(entered_otp).then((result) => {
+      // User signed in successfully.
       set_otp_matched(true);
-    }
+      // ...
+    }).catch((error) => {
+      // User couldn't sign in (bad verification code?)
+      // ...
+    });
   }
 
   var BASE_URL='http://127.0.0.1:8000'
@@ -95,6 +117,7 @@ function SignUp() {
             Copyright © 2022 Edugeek. All Rights Reserved.
           </h6>
         </Container>
+        <div id="recaptcha-container"></div>
       </div>
     );
   }
