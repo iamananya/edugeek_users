@@ -33,7 +33,7 @@ function StudyMaterial() {
               <div onContextMenu={(e) => e.preventDefault()}>
                 <Col style={{ padding: "20px" }}>
                   {material.map((data) => (
-                    <Card>
+                    <Card style={{marginBottom:"2rem"}}>
                       <Card.Header as="h5">Class: {data.class_number}</Card.Header>
                       <Card.Img variant="top" src="https://images.unsplash.com/photo-1648737155328-0c0012cf2f20" />
                       <Card.Body>

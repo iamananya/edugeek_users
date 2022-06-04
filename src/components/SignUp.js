@@ -57,7 +57,7 @@ function SignUp() {
     });
   }
 
-  var BASE_URL='http://127.0.0.1:8000'
+  var BASE_URL='http://edugeek.pythonanywhere.com'
   async function onSubmit(e){
     e.preventDefault()
   var response= await axios.post(BASE_URL+'/profiles/',{
@@ -78,7 +78,7 @@ function SignUp() {
       <div>
         <Container>
           <h1 className="shadow-sm text-success mt-5 p-3 text-center rounded">
-            Admin Signup
+            Student Signup
           </h1>
           <Row className="mt-5">
             <Col

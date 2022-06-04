@@ -14,7 +14,7 @@ import ReactPlayer from "react-player";
 import Notif from "./Notif";
 function Videos(class_number) {
   const [videos, setVideos] = useState([]);
-  const [playing, setPlaying] = useState(true);
+  const [playing, setPlaying] = useState(false);
   const { classNumber } = useParams();
   console.log(classNumber);
 
@@ -38,14 +38,14 @@ function Videos(class_number) {
                 <Col style={{ padding: "20px" }}>
                   {videos.map((video) => (
                       video.class_number == classNumber ?
-                    <Card>
+                    <Card style={{marginBottom:"2rem"}}>
                       <Card.Header as="h5">Class: {video.class_number}</Card.Header>
                       <Card.Body>
                         <ReactPlayer
                           config={{ file: { attributes: { controlsList: 'nodownload' } } }}
 
                           url={video.video}
-                          playing={playing}
+                          setPlaying={true}
                           controls
                           width="100%"
                           
