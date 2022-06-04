@@ -7,18 +7,23 @@ import Button from "react-bootstrap/Button";
 import Sidenav from "./Sidenav";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { getVideos } from "../apiClient/apiClient";
+import { useParams } from 'react-router';
 
 
 import ReactPlayer from "react-player";
 import Notif from "./Notif";
-function Batch() {
+function Videos(class_number) {
   const [videos, setVideos] = useState([]);
   const [playing, setPlaying] = useState(true);
+  const { classNumber } = useParams();
+  console.log(classNumber);
 
-  const classes = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
   useEffect(async () => {
+    const res = await getVideos();
+    setVideos(res.data);
+    console.log(res.data);
+    console.log(videos);
   }, []);
-
   return (
     <div style={{marginTop:"5%"}}>
       <Container>
@@ -31,15 +36,27 @@ function Batch() {
             <div style={{ marginTop: "5%" }}>
               <div onContextMenu={(e) => e.preventDefault()}>
                 <Col style={{ padding: "20px" }}>
-                  {classes.map((c) => (
+                  {videos.map((video) => (
+                      video.class_number == classNumber ?
                     <Card>
-                      <Card.Header as="h5"></Card.Header>
+                      <Card.Header as="h5">Class: {video.class_number}</Card.Header>
                       <Card.Body>
-                      <Card.Link href={"/Videos/" + c} style={{fontStyle:"none"}}>
-                        <Card.Title>Class {c}</Card.Title>
-                      </Card.Link>
+                        <ReactPlayer
+                          config={{ file: { attributes: { controlsList: 'nodownload' } } }}
+
+                          url={video.video}
+                          playing={playing}
+                          controls
+                          width="100%"
+                          
+                        
+                        /> 
+                      
+                      <Card.Title>Title: {video.title}</Card.Title>
+
+                        
                       </Card.Body>
-                    </Card>
+                    </Card> : <></>
                   ))}
                 </Col>
               </div>
@@ -53,4 +70,4 @@ function Batch() {
   );
 }
 
-export default Batch;
+export default Videos;
