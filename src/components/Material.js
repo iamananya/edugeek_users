@@ -6,23 +6,21 @@ import Card from "react-bootstrap/Card";
 import Button from "react-bootstrap/Button";
 import Sidenav from "./Sidenav";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { getVideos } from "../apiClient/apiClient";
+import { getMaterial } from "../apiClient/apiClient";
 import { useParams } from 'react-router';
 
 
 import ReactPlayer from "react-player";
 import Notif from "./Notif";
-function Videos(class_number) {
-  const [videos, setVideos] = useState([]);
-  const [playing, setPlaying] = useState(false);
+function StudyMaterial() {
+  const [material, setMaterial] = useState([]);
   const { classNumber } = useParams();
-
+  
   useEffect(async () => {
-    const res = await getVideos();
-    setVideos(res.data);
-    console.log(res.data);
-    console.log(videos);
+    const res = await getMaterial();
+    setMaterial(res.data);
   }, []);
+  
   return (
     <div style={{marginTop:"5%"}}>
       <Container>
@@ -31,28 +29,20 @@ function Videos(class_number) {
             <Sidenav />
           </Col>
           <Col xs={6}>
-            <h2>Class 10 Science</h2>
+            <h2>List of Study Material</h2>
             <div style={{ marginTop: "5%" }}>
               <div onContextMenu={(e) => e.preventDefault()}>
                 <Col style={{ padding: "20px" }}>
-                  {videos.map((video) => (
-                      video.class_number == classNumber ?
-                    <Card style={{marginBottom:"2rem"}}>
-                      <Card.Header as="h5">Class: {video.class_number}</Card.Header>
+                  {material.map((data) => (
+                      (data.class_number == classNumber) ?
+                    <Card>
+                      <Card.Header as="h5">Class: {data.class_number}</Card.Header>
+                      <Card.Img variant="top" src="https://images.unsplash.com/photo-1648737155328-0c0012cf2f20" />
                       <Card.Body>
-                        <ReactPlayer
-                          config={{ file: { attributes: { controlsList: 'nodownload' } } }}
-
-                          url={video.video}
-                          setPlaying={true}
-                          controls
-                          width="100%"
-                          
-                        
-                        /> 
+                       
                       
-                      <Card.Title>Title: {video.title}</Card.Title>
-
+                      <Card.Title>Title: {data.title}</Card.Title>
+                      <Button href={data.material}>Link</Button> 
                         
                       </Card.Body>
                     </Card> : <></>
@@ -69,4 +59,4 @@ function Videos(class_number) {
   );
 }
 
-export default Videos;
+export default StudyMaterial;

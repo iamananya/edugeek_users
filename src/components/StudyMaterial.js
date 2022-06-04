@@ -13,6 +13,7 @@ import ReactPlayer from "react-player";
 import Notif from "./Notif";
 function StudyMaterial() {
   const [material, setMaterial] = useState([]);
+  const classes = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
   
   useEffect(async () => {
     const res = await getMaterial();
@@ -32,16 +33,15 @@ function StudyMaterial() {
             <div style={{ marginTop: "5%" }}>
               <div onContextMenu={(e) => e.preventDefault()}>
                 <Col style={{ padding: "20px" }}>
-                  {material.map((data) => (
-                    <Card style={{marginBottom:"2rem"}}>
-                      <Card.Header as="h5">Class: {data.class_number}</Card.Header>
-                      <Card.Img variant="top" src="https://images.unsplash.com/photo-1648737155328-0c0012cf2f20" />
+
+                {classes.map((c) => (
+                    <Card>
+                      <Card.Header as="h5"></Card.Header>
+
                       <Card.Body>
-                       
-                      
-                      <Card.Title>Title: {data.title}</Card.Title>
-                      <Button href={data.material}>Link</Button> 
-                        
+                      <Card.Link href={"/study-material/" + c} style={{fontStyle:"none"}}>
+                        <Card.Title>Class {c}</Card.Title>
+                      </Card.Link>
                       </Card.Body>
                     </Card>
                   ))}
