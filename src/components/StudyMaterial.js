@@ -33,9 +33,11 @@ function StudyMaterial() {
             <div style={{ marginTop: "5%" }}>
               <div onContextMenu={(e) => e.preventDefault()}>
                 <Col style={{ padding: "20px" }}>
+
                 {classes.map((c) => (
                     <Card>
                       <Card.Header as="h5"></Card.Header>
+
                       <Card.Body>
                       <Card.Link href={"/study-material/" + c} style={{fontStyle:"none"}}>
                         <Card.Title>Class {c}</Card.Title>

@@ -32,7 +32,7 @@ function Batch() {
               <div onContextMenu={(e) => e.preventDefault()}>
                 <Col style={{ padding: "20px" }}>
                   {classes.map((c) => (
-                    <Card>
+                    <Card style={{marginBottom:"2rem"}}>
                       <Card.Header as="h5"></Card.Header>
                       <Card.Body>
                       <Card.Link href={"/Videos/" + c} style={{fontStyle:"none"}}>
