@@ -16,7 +16,6 @@ function Videos(class_number) {
   const [videos, setVideos] = useState([]);
   const [playing, setPlaying] = useState(true);
   const { classNumber } = useParams();
-  console.log(classNumber);
 
   useEffect(async () => {
     const res = await getVideos();

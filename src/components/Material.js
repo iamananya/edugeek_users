@@ -7,20 +7,20 @@ import Button from "react-bootstrap/Button";
 import Sidenav from "./Sidenav";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { getMaterial } from "../apiClient/apiClient";
+import { useParams } from 'react-router';
 
 
 import ReactPlayer from "react-player";
 import Notif from "./Notif";
 function StudyMaterial() {
   const [material, setMaterial] = useState([]);
-  const classes = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
+  const { classNumber } = useParams();
   
   useEffect(async () => {
     const res = await getMaterial();
     setMaterial(res.data);
-    console.log(res.data);
-    console.log(material);
   }, []);
+  
   return (
     <div style={{marginTop:"5%"}}>
       <Container>
@@ -33,15 +33,19 @@ function StudyMaterial() {
             <div style={{ marginTop: "5%" }}>
               <div onContextMenu={(e) => e.preventDefault()}>
                 <Col style={{ padding: "20px" }}>
-                {classes.map((c) => (
+                  {material.map((data) => (
+                      (data.class_number == classNumber) ?
                     <Card>
-                      <Card.Header as="h5"></Card.Header>
+                      <Card.Header as="h5">Class: {data.class_number}</Card.Header>
+                      <Card.Img variant="top" src="https://images.unsplash.com/photo-1648737155328-0c0012cf2f20" />
                       <Card.Body>
-                      <Card.Link href={"/study-material/" + c} style={{fontStyle:"none"}}>
-                        <Card.Title>Class {c}</Card.Title>
-                      </Card.Link>
+                       
+                      
+                      <Card.Title>Title: {data.title}</Card.Title>
+                      <Button href={data.material}>Link</Button> 
+                        
                       </Card.Body>
-                    </Card>
+                    </Card> : <></>
                   ))}
                 </Col>
               </div>
