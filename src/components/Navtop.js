@@ -11,9 +11,9 @@ function Navtop() {
 
   return (
     <div>
-      <Navbar bg="light" expand="lg">
+      <Navbar bg="light" expand="lg" style={{fontWeight:"4rem"}}>
         <Container>
-          <Navbar.Brand href="/login">Edu-Geek</Navbar.Brand>
+          <Navbar.Brand href="/login">EduGeeks</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
@@ -43,12 +43,12 @@ function Navtop() {
               {/* <a href="#login">User</a> */}
               <NavDropdown title="User" id="basic-nav-dropdown">
              
-                <NavDropdown.Item href="#action/3.1">
+                {/* <NavDropdown.Item href="#action/3.1">
                   Profile
                 </NavDropdown.Item>
                 <NavDropdown.Item href="#action/3.2">
                   Settings
-                </NavDropdown.Item>
+                </NavDropdown.Item> */}
                 <NavDropdown.Item  onClick={() => {
                     localStorage.setItem('edugeek-authorized', 0);
                     navigate('/', {replace: true});

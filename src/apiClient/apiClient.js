@@ -1,18 +1,18 @@
 import axios from "axios";
 
-const baseUrl = 'http://edugeek.pythonanywhere.com';
+const baseUrl = 'https://edugeeks.pythonanywhere.com';
 
 export const getBatches = async () => {
-    const res = await axios.get(baseUrl + '/batches/')
+    const res = await axios.get(baseUrl + '/batch/')
     return res
 }
 
 export const getVideos = async () => {
-    const res = await axios.get(baseUrl + '/courses/')
+    const res = await axios.get(baseUrl + '/video/')
     return res
 }
 export const getMaterial = async () => {
-    const res = await axios.get(baseUrl + '/material/')
+    const res = await axios.get(baseUrl + '/study_material/')
     return res
 }
 
@@ -22,6 +22,6 @@ export const getNotif = async () => {
 }
 
 export const getStudents = async () => {
-    const res = await axios.get(baseUrl + '/profiles/')
+    const res = await axios.get(baseUrl + '/user/')
     return res
 }

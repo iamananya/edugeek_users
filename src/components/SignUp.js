@@ -4,22 +4,14 @@ import axios from "axios";
 import { useState } from "react";
 import { RecaptchaVerifier, signInWithPhoneNumber } from 'firebase/auth';
 import { authentication } from './FirebaseConfig';
-
-var phone_number;
-var entered_otp = "";
-var otp_number = 0;
-var name="";
-var dob="";
-var email="";
-var address="";
-
+import {Link} from "react-router-dom"
 var file;
-var password="";
 
 function SignUp() {
   const [otp_sent, set_otp_sent] = useState(false);
   const [otp_matched, set_otp_matched] = useState(false);
-
+ 
+  
   async function sendOTP(e) {
     e.preventDefault();
     // otp_number = Math.floor(Math.random() * 9000 + 1000);
@@ -58,26 +50,37 @@ function SignUp() {
   }
 
   var BASE_URL='http://edugeek.pythonanywhere.com'
+  const [phone_number,set_phone_number]=useState('');
+  const [entered_otp,set_entered_otp]=useState('');
+  const [otp_number,set_otp_number]=useState(0);
+  const [name,set_name]=useState('');
+  const [dob,set_dob]=useState('');
+  const [email,set_email]=useState('');
+  const [address,set_address]=useState('');
+  const [password,set_password]=useState('');
+  const [start_date,set_subscription_start_date]=useState('2022-04-03');
+  const [end_date,set_subscription_end_date]=useState('2022-04-03');
   async function onSubmit(e){
     e.preventDefault()
-  var response= await axios.post(BASE_URL+'/profiles/',{
-    "name":name,
-    "dob":dob,
-    "email":email,
-    "phone":parseInt(phone_number),
-    "address":address,
+  var response= await axios.post(BASE_URL+'/user/',{
+    name:name,
+    doc:dob,
+    email:email,
+    phone_number:parseInt(phone_number),
+    address:address,
     "image":null,
-    "subscription_start_date":"2022-04-03",
-    "subscription_end_date":"2022-04-03",
-    "password": password
+    start_date:start_date,
+    end_date:end_date,
+    password: password
   })
   console.log(response);
+  
   }
   function screen1() {
     return (
       <div>
         <Container>
-          <h1 className="shadow-sm text-success mt-5 p-3 text-center rounded">
+          <h1 className="shadow-sm text-dark mt-5 p-3 text-center rounded">
             Student Signup
           </h1>
           <Row className="mt-5">
@@ -96,15 +99,15 @@ function SignUp() {
                 <Form.Group>
                   <Form.Label>Phone</Form.Label>
                   <Form.Control
-                    placeholder="Phone Number"
+                    placeholder="+91XXXXXXXXXX"
                     onChange={(e) => {
-                      phone_number = e.target.value;
+                      set_phone_number ("+91"+e.target.value);
                     }}
                   />
                 </Form.Group>
                 <br />
                 <Button
-                  variant="success btn-block"
+                  variant="dark btn-block"
                   type="submit"
                   onClick={sendOTP}
                 >
@@ -113,8 +116,9 @@ function SignUp() {
               </Form>
             </Col>
           </Row>
+        
           <h6 className="mt-5 p-5 text-center text-secondary ">
-            Copyright © 2022 Edugeek. All Rights Reserved.
+          Already have an account? <Link to="/login">Login</Link> <br/>Copyright © 2022 Edugeek. All Rights Reserved.
           </h6>
         </Container>
         <div id="recaptcha-container"></div>
@@ -125,7 +129,7 @@ function SignUp() {
     return (
       <div>
         <Container>
-          <h1 className="shadow-sm text-success mt-5 p-3 text-center rounded">
+          <h1 className="shadow-sm text-dark mt-5 p-3 text-center rounded">
             Admin Signup
           </h1>
           <Row className="mt-5">
@@ -141,14 +145,14 @@ function SignUp() {
                   <Form.Control
                     placeholder="Enter OTP"
                     onChange={(e) => {
-                      entered_otp = e.target.value;
+                      set_entered_otp(e.target.value);
                     }}
                   />
                 </Form.Group>
                 <br />
 
                 <Button
-                  variant="success btn-block"
+                  variant="dark btn-block"
                   type="submit"
                   onClick={validateOTP}
                 >
@@ -158,7 +162,7 @@ function SignUp() {
             </Col>
           </Row>
           <h6 className="mt-5 p-5 text-center text-secondary ">
-            Copyright © 2022 Edugeek. All Rights Reserved.
+          Already have an account? <Link to="/login">Login</Link> <br/>Copyright © 2022 Edugeek. All Rights Reserved.
           </h6>
         </Container>
       </div>
@@ -169,7 +173,7 @@ function SignUp() {
     return (
       <div>
         <Container>
-          <h1 className="shadow-sm text-success mt-5 p-3 text-center rounded">
+          <h1 className="shadow-sm text-dark mt-5 p-3 text-center rounded">
             Admin Signup
           </h1>
           <Row className="mt-5">
@@ -183,21 +187,21 @@ function SignUp() {
                 <Form.Group controlId="name">
                   <Form.Label> Name</Form.Label>
                   <Form.Control onChange={(e) => {
-                      name = e.target.value;
+                      set_name(e.target.value);
                     }}/>
                 </Form.Group>
                 <br />
                 <Form.Group controlId="dob">
                   <Form.Label> Date of Birth</Form.Label>
                   <Form.Control onChange={(e) => {
-                      dob = e.target.value;
+                      set_dob(e.target.value);
                     }}/>
                 </Form.Group>
                 <br />
                 <Form.Group controlId="email">
                   <Form.Label> Email</Form.Label>
                   <Form.Control type="email" placeholder="name@example.com"  onChange={(e) => {
-                      email = e.target.value;
+                      set_email(e.target.value);
                     }}/>
                 </Form.Group>
                 <br />
@@ -211,14 +215,28 @@ function SignUp() {
                 <Form.Group controlId="address">
                   <Form.Label> Address</Form.Label>
                   <Form.Control onChange={(e) => {
-                      address = e.target.value;
+                      set_address(e.target.value);
+                    }}/>
+                </Form.Group>
+                <br />
+                <Form.Group controlId="start_date">
+                  <Form.Label> Subcription start date</Form.Label>
+                  <Form.Control onChange={(e) => {
+                      set_subscription_start_date(e.target.value);
+                    }}/>
+                </Form.Group>
+                <br />
+                <Form.Group controlId="end_date">
+                  <Form.Label> Subscription end date</Form.Label>
+                  <Form.Control onChange={(e) => {
+                      set_subscription_end_date(e.target.value);
                     }}/>
                 </Form.Group>
                 <br />
                 <Form.Group controlId="formBasicPassword1">
                   <Form.Label> Create Password</Form.Label>
                   <Form.Control type="password" onChange={(e) => {
-                      password = e.target.value;
+                      set_password(e.target.value);
                     }} />
                 </Form.Group>
                 <br />
@@ -227,14 +245,15 @@ function SignUp() {
                   <Form.Control type="password" />
                 </Form.Group>
                 <br />
-                <Button variant="success btn-block" type="submit" onClick={onSubmit}>
+                <Button variant="dark btn-block" type="submit" onClick={onSubmit}>
                   Submit
                 </Button>
               </Form>
             </Col>
           </Row>
+
           <h6 className="mt-5 p-5 text-center text-secondary ">
-            Copyright © 2022 Edugeek. All Rights Reserved.
+          Already have an account? <a><Link to="/login">Login</Link></a> <br/>Copyright © 2022 Edugeek. All Rights Reserved.
           </h6>
         </Container>
       </div>

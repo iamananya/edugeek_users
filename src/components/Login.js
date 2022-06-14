@@ -34,8 +34,8 @@ const Login = () => {
   return (
     <>
       <Container>
-        <h1 className="shadow-sm text-success mt-5 p-3 text-center rounded">
-          Admin Login
+        <h1 className="shadow-sm text-dark mt-5 p-3 text-center rounded">
+          Students Login
         </h1>
         <Row className="mt-5">
           <Col
@@ -59,7 +59,7 @@ const Login = () => {
                     }} />
               </Form.Group>
               <br />
-              <Button variant="success btn-block" type="submit">
+              <Button variant="dark btn-block" type="submit">
                 Login
               </Button>
             </Form>
