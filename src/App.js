@@ -22,7 +22,7 @@ function App() {
   // }
   return (
     
-    <div className="App" style={{backgroundColor:"#daebe1"}}>
+    <div className="App" style={{backgroundColor:"#eba9ad"}}>
       <BrowserRouter>
       <Navtop/>
       {/* <Adminpage/> */}
